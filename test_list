@@ -1,0 +1,153 @@
+//
+//  main.c
+//  Assignment 2 - Singly Linked Lists
+//
+//  Created by Josh Burks on 9/7/15.
+//  Copyright (c) 2015 Josh Burks. All rights reserved.
+//
+
+#include <stdio.h>
+#include <assert.h>
+#include <stdlib.h>
+#include <string.h>
+
+struct Node
+{
+    int data;
+    struct Node* next;
+}*head;
+
+void InsertAtEnd(struct Node *n, int value);
+void InsertAtFront(int value);
+void InsertAfterN(struct Node *n, int value, int loc);
+void Print(struct Node *n);
+void Reverse(struct Node *n);
+
+/////////////////////////////////////
+
+///////////////////////////////////////
+int main() {
+    
+    //int i,num;
+   struct Node *n;
+    head=NULL;
+    
+    InsertAtFront(1);
+    InsertAtEnd(n, 2);
+    InsertAtEnd(n, 3);
+    Print(n);
+    InsertAtFront(5);
+    Print(n);
+    InsertAfterN(n, 7,3);
+    Print(n);
+    Reverse(n);
+    Print(n);
+}
+
+// FUNCTIONS
+void InsertAtEnd(struct Node *r, int num)
+{
+    struct Node *temp;
+    temp=(struct Node *)malloc(sizeof(struct Node));
+    temp->data = num;
+    r=head;
+    if(r==NULL)
+    {
+        head=temp;
+        head->next=NULL;
+        return;
+    }
+    while (r->next!=NULL)
+    {
+        r=r->next;
+    }
+    r->next=temp;
+};
+
+void InsertAtFront(int num)
+{
+    struct Node *temp;
+    temp=(struct Node *)malloc(sizeof(struct Node));
+    temp->data = num;
+    if (head==NULL)
+    {
+        head=temp;
+        head->next=NULL;
+    }
+    else
+    {
+        temp->next=head;
+        head=temp;
+    }
+}
+
+void InsertAfterN(struct Node *r, int num, int loc)
+{
+    struct Node *temp;
+    temp=(struct Node *)malloc(sizeof(struct Node));
+    temp->data = num;
+    r=head;
+    int cnt=0;
+    if(r==NULL)
+    {
+        head=temp;
+        head->next=NULL;
+        return;
+    }
+    while (r->next!=NULL)
+    {
+        cnt++;
+        if (cnt==loc)
+        {
+            temp->next=r->next;
+            r->next=temp;
+        }
+        r=r->next;
+    }
+    if (cnt<loc)
+    {r->next=temp;}
+
+};
+
+void Reverse(struct Node *r)
+{
+    struct Node *temp1;
+   // struct Node *temp2;
+    r=head;
+    
+    int cnt = 0;
+    
+    
+    while (r->next != NULL)
+    {
+        if (cnt==1)
+        {
+            temp1=r->next;
+            r->next = NULL;
+        }
+        else
+        
+        temp1=r->next;
+        r->next=NULL;
+        cnt++;
+    }
+    
+    
+};
+
+void Print(struct Node *r)
+{
+    r=head;
+    if(r==NULL)
+    {
+        printf("\nThe list is empty");
+        return;
+    }
+    printf("\nContents of the list [ ");
+    while (r!=NULL)
+    {
+        printf("%d ", r->data);
+        r=r->next;
+    }
+    printf("]");
+}
